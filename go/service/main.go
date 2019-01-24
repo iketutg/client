@@ -370,7 +370,19 @@ func (d *Service) RunBackgroundOperations(uir *UIRouter) {
 	d.runTLFUpgrade()
 	d.runTeamUpgrader(ctx)
 	d.runHomePoller(ctx)
+	d.checkBotLiteMode(ctx)
 	go d.identifySelf()
+}
+
+// Bots may want to run a in 'lite' mode which disables non-critical
+// background services which are meant to help with UX such as prefilling
+// caches, probabilistic audits etc.
+func (d *Service) checkBotLiteMode(ctx context.Context) {
+	if d.G().Env.GetEnableBotLiteMode() {
+		d.G().Log.Debug("bot lite mode enabled, disabled search indexer and conv loader")
+		<-d.ChatG().Indexer.Stop(ctx)
+		<-d.ChatG().ConvLoader.Stop(ctx)
+	}
 }
 
 func (d *Service) purgeOldChatAttachmentData() {

@@ -98,6 +98,7 @@ type configGetter interface {
 	GetAttachmentDisableMulti() (bool, bool)
 	GetChatOutboxStorageEngine() string
 	GetDisableTeamAuditor() (bool, bool)
+	GetEnableBotLiteMode() (bool, bool)
 }
 
 type CommandLine interface {
