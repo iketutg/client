@@ -1146,8 +1146,8 @@ func (fup *folderUpdatePrepper) prepUpdateForPaths(ctx context.Context,
 	mostRecentUnmergedMD, mostRecentMergedMD ImmutableRootMetadata,
 	resolvedPaths map[BlockPointer]path, lbc localBcache,
 	newFileBlocks fileBlockMap, dirtyBcache DirtyBlockCacheSimple,
-	copyBehavior prepFolderCopyBehavior) (
-	updates map[BlockPointer]BlockPointer, bps blockPutState,
+	bps blockPutState, copyBehavior prepFolderCopyBehavior) (
+	updates map[BlockPointer]BlockPointer,
 	blocksToDelete []kbfsblock.ID, err error) {
 	updates = make(map[BlockPointer]BlockPointer)
 
